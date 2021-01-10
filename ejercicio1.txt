@@ -1,0 +1,36 @@
+Ejercicio migraciones
+
+
+- Probar las migraciones en ambientes no productivos (QA).
+- Realizar la migración en un horario de baja concurrencia, en caso de no poder realizar una baja del servicio ( modo mantención), 
+  mientras se migre y para pruebas de funcionamiento del servicio.
+- Tener Rollbacks en las migraciones de las columnas añadidas.
+- En las columnas añadidas añadir un valor por default
+- Monitoreo del estado del servidor
+- Si las bases de datos estan en el mismo servidor, setear todas las columnas añadidas que involucren timestamps, el respectivo timezone del pais respectivo, 
+  en caso de estar alojadas en distintos servidores no aplica.
+
+
+Ejercicio Single Point of Failure
+
+
+- El balanceador de carga es un SPF al estar operando solo y recibir todas las peticiones de trafico, si este falla, todo el servicio falla
+- Se pueden generar sobrecargas del balanceador si no esta bien configurado 
+
+- Mitigaciones: Configurar un clúster que cuente con 2 0 más balanceadores de carga de alta disponibilidad con configuración activo/activo activo/pasivo.
+    Se puede tener además 2 diferentes proveedores de servicio, corriendo un par de clusters de balanceadores de carga, configurando un DNS para 2 o más IPs publicas,
+        lo que garantizaria el procesamiento por Round Robin de las peticiones de manera uniforme.
+    Si se tienen servidores en distintas geolocalizaciones, se pueden enviar las peticiones a estos servicios mas cercanos.
+
+- Base de datos maestra es un SPF al estar realizando peticiones de datos de conexión de todos los clientes previo a conectarse al node de bases de datos de cada cliente, 
+lo que puede causar saturación de esta e incluso la no disponibilidad de la misma.
+
+- Mitigaciones: crear réplicas de lectura por ejemplo utilizando el RDS de AWS.
+
+- Nginx puede ser un potencial SPF si no se configura correctamente
+
+- Mitigaciones: Crear script que revise el status de nginx constantemente, y que cuando detecte un return vacio, envie un email de la falla detectada y baje el keepalive en el servidor.
+
+- Nodo único a la base de datos maestra: está puede ser una potencial SPF ya que si el nodo presenta fallas, o se presenta alta concurrencia, el nodo puede colapsar.
+
+- Mitigaciones: Tener multiples nodos de conexión.
