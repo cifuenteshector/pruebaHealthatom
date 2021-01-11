@@ -11,7 +11,7 @@ npm install mathjs
 ## Usage
 
 ```javascript
-nodemon $nombre_archivo.js
+nodemon nombre_archivo.js
 ```
 # Ejercicio 3
 
