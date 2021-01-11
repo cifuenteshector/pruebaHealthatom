@@ -2,7 +2,7 @@
 
 ## Installation
 
-Para revisar estos ejercicios es necesario contar con node y nodemon instalados.
+Para revisar estos ejercicios es necesario contar con node y nodemon instalados, además debemos instalar el siguiente paquete:
 
 ```bash
 npm install mathjs
