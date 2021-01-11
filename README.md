@@ -9,6 +9,7 @@ npm install mathjs
 ```
 
 ## Usage
+Para probar en terminal cada archivo, se debe ejecutar el siguiente comando:  
 
 ```javascript
 nodemon nombre_archivo.js
